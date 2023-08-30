@@ -1,19 +1,11 @@
-// const mysql=require('mysql2');
-
-// // create the connection to database
-// // using MySQL driver.
-
-// const pool =mysql.createPool({
-//     host:'localhost',
-//     user:'root',
-//     database:'node_complete',
-//     password:'deepakkr4'
-// });
-// module.exports=pool.promise();
-
 const Sequelize = require("sequelize");
-const sequelize = new Sequelize("project", "root", "deepakkr4", {
-  dialect: "mysql",
-  host: "localhost",
-});
-module.exports=sequelize;
+const sequelize = new Sequelize(
+  process.env.DB_NAME,
+  process.env.DB_USERNAME,
+  process.env.DB_PASSWORD,
+  {
+    dialect: "mysql",
+    host: process.env.DB_HOST,
+  }
+);
+module.exports = sequelize;
