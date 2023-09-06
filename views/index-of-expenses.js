@@ -177,7 +177,7 @@ async function showAllrecord(page) {
 //  localStorage.setItem("pageLimit",document.getElementById("pageLimit").value)
 
  
- let limits=localStorage.getItem("pageLimit")
+ let limits=localStorage.getItem("pageLimit")||'10'
   // const response = await axios.get("http://localhost:3005/getAll", {
   //   headers: { Authorization: token },
   // });

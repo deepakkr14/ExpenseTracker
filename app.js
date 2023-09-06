@@ -1,8 +1,10 @@
 const path = require("path");
-const fs=require("fs")
-const Port=process.env.PORT
+const fs = require("fs");
+const Port = process.env.PORT;
+const dotenv = require("dotenv");
 const express = require("express");
 
+dotenv.config();
 const bodyParser = require("body-parser");
 
 const cors = require("cors");
@@ -11,20 +13,22 @@ const bcrypt = require("bcryptjs");
 
 const jwt = require("jsonwebtoken");
 
-const uuid=require("uuid")
+const uuid = require("uuid");
 
 const sequelize = require("./util/database");
 
-const helmet= require("helmet")
-const morgan= require("morgan")
+// const helmet = require("helmet");
+const morgan = require("morgan");
 const app = express();
-const dotenv = require("dotenv");
 
-const accessLogStream=fs.createWriteStream(path.join(__dirname,'accessLog'),{flags:"a"})
-require("dotenv").config({ path: "./config.env" });
+const accessLogStream = fs.createWriteStream(
+  path.join(__dirname, "accessLog"),
+  { flags: "a" }
+);
+
 app.use(cors());
-app.use(helmet());
-app.use(morgan("combined",{stream:accessLogStream}));
+// app.use(helmet());
+app.use(morgan("combined", { stream: accessLogStream }));
 app.use(express.json());
 
 const Uroutes = require("./routes/user-routes");
@@ -36,9 +40,8 @@ const Expense = require("./models/expense-model");
 const User = require("./models/user-model");
 const Order = require("./models/order-model");
 const Password = require("./models/password-model");
-const Download=require("./models/downloads-model");
+const Download = require("./models/downloads-model");
 const { Stream } = require("stream");
-
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
@@ -47,9 +50,12 @@ app.use(Uroutes);
 app.use(Eroutes);
 app.use(Purchaseroutes);
 app.use(forgetPasswordRoutes);
+app.use((req,res)=>{
+  console.log(req.url)
+res.sendFile(path.join(__dirname,`views/${req.url}`));
 
+})
 
-console.log(process.env.PORT)
 User.hasMany(Expense);
 Expense.belongsTo(User);
 
@@ -60,13 +66,13 @@ User.hasMany(Password);
 Password.belongsTo(User);
 
 User.hasMany(Download);
-Download.belongsTo(User)
+Download.belongsTo(User);
 sequelize
   // .sync({force:true})
   //  .sync({alter:true})
   .sync()
   .then((result) => {
-    console.log("server started on "+ process.env.PORT);
+    console.log("server started on " + process.env.PORT);
 
     app.listen(process.env.PORT);
   })
