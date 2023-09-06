@@ -1,8 +1,5 @@
 let form = document.getElementById("form");
-// let ul1 = document.getElementById("table 1");
-// let ul2 = document.getElementById("table 2");
-// let ul3 = document.getElementById("table 3");
-// let ul4 = document.getElementById("table 4");
+
 const p = document.querySelector("#message");
 async function singup(event) {
   event.preventDefault();
@@ -21,7 +18,7 @@ async function singup(event) {
     if (response.data.length > 0) {
       p.innerText = "Email already exists";
     } else {
-      window.location.href = "./log in page.html";
+      window.location.href = "./login.html";
     }
   } catch (error) {
     console.log(error);

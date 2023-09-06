@@ -15,9 +15,9 @@ async function login(event) {
     localStorage.setItem("token",response.data.token)
     if (response.status == 201) {
       alert("Successfully logged in");
-      window.location.href = './copy of expense.html';
+      window.location.href = './expense.html';
     }
   } catch (error) {
-    alert(error.response.data.message);
+    alert(error);
   }
 }

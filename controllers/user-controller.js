@@ -39,7 +39,7 @@ exports.postlogin = async (req, res, next) => {
   const password = req.body.password;
   try {
     const user = await Users.findOne({ where: { email: email } });
-
+console.log(user)
     if (user) {
       const passwordsMatch = await bcrypt.compare(password, user.password);
 

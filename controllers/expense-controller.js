@@ -12,7 +12,7 @@ exports.getPage = async (req, res) => {
     let limits = Number(req.params.limit);
 
     let itemsPerPage = limits;
-    const totalData = await Expense.count();
+    const totalData = await req.user.countExpenses();
     const ispremiumuser = await req.user.ispremiumuser;
     const expenses = await req.user.getExpenses({
       limit: limits, // Number of items per page

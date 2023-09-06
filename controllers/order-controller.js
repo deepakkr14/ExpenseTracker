@@ -17,7 +17,7 @@ const createOrder = async (req, res) => {
   try {
     const order = await razorpay.orders.create(options);
     await req.user.createOrder({ orderid: order.id });
-    res.json({ order: order, key_id: KEY_ID });
+    res.json({ order: order, key_id:process.env.RAZORPAY_KEY_ID });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to create order" });
